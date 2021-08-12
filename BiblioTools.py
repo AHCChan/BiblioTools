@@ -64,13 +64,26 @@ def Author_List(raw_str, separator_output=DEFAULT__separator_output,
     
     Author_List(str, str, str) -> str
     """
-    raw_authors = raw_str.split(",")
+    raw_authors = raw_str.split(separator_input)
     temp_authors = []
     for author in raw_authors:
+        # Strip
         while author[0] in [" "] or author[0].isdigit(): # Remove leading
             author = author[1:]
         while author[-1] in [" "] or author[-1].isdigit(): # Remove trailing
             author = author[:-1]
+        # Split
+        words = author.split(" ")
+        # Blanks
+        while "" in words: words.remove("")
+        # Trailing footnotes
+        while len(words[-1]) and words[-1].islower(): words = words[:-1]
+        # Periods for single initials
+        for i in range(len(words)):
+            if len(words[i]) == 1:
+                words[i] = words[i] + "."
+        # Rejoin
+        author = " ".join(words)
         temp_authors.append(author)
     result = separator_output.join(temp_authors)
     return result
