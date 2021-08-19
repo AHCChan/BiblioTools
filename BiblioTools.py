@@ -64,7 +64,11 @@ def Author_List(raw_str, separator_output=DEFAULT__separator_output,
     
     Author_List(str, str, str) -> str
     """
-    raw_authors = raw_str.split(separator_input)
+    # Replace
+    str_1 = raw_str.replace("&.", separator_input)
+    str_2 = str_1.replace("&", separator_input)
+    #
+    raw_authors = str_2.split(separator_input)
     temp_authors = []
     for author in raw_authors:
         # Strip
@@ -112,6 +116,11 @@ def Author_List_EXE():
                 print(Author_List(input_1, input_2))
         else:
             print(Author_List(input_1))
-    
+
+def A():
+    """
+    Shortcut for Author_List_EXT()
+    """
+    Author_List_EXE()
 
 
